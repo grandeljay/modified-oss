@@ -19,7 +19,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Grandeljay\\": "/vendor-no-composer/grandeljay"
+            "Grandeljay\\Oss\\": "src-mmlc"
         }
+    },
+    "php": {
+        "version": "^8.0.0"
+    },
+    "mmlc": {
+        "version": "^1.21.0"
     }
 }
