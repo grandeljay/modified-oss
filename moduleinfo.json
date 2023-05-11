@@ -1,0 +1,25 @@
+{
+    "name": "OSS",
+    "archiveName": "grandeljay/oss",
+    "sourceDir": "src",
+    "version": "auto",
+    "shortDescription": "",
+    "description": "",
+    "developer": "grandeljay",
+    "developerWebsite": "https://github.com/grandeljay",
+    "website": "https://github.com/grandeljay/modified-oss",
+    "modifiedCompatibility": [
+        "2.0.7.2"
+    ],
+    "category": "shipping",
+    "price": "free",
+    "require": {
+        "composer/autoload": "^1.3.0",
+        "robinthehood/modified-std-module": "^0.9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Grandeljay\\": "/vendor-no-composer/grandeljay"
+        }
+    }
+}
