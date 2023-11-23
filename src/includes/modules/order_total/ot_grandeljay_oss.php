@@ -67,6 +67,17 @@ class ot_grandeljay_oss extends StdModule
         }
     }
 
+    /**
+     * VAT Calculation
+     *
+     * | Has VAT ID | VAT Free Group | Billing       | Shipping | VAT      |
+     * | ---------- | -------------- | ------------- | -------- | -------- |
+     * | No         | -              | -             | -        | Shipping |
+     * | Yes        | Yes            | International | National | Shipping |
+     * | Yes        | No             | National      | -        | Billing  |
+     *
+     * @return void
+     */
     public function process($file = null): void
     {
         global $order;
@@ -107,7 +118,7 @@ class ot_grandeljay_oss extends StdModule
          * shipping.
          */
         if ($tax_is_included && $addTax) {
-            if ($customer_is_national && $shipment_is_international) {
+            if ($customer_is_national) {
                 $apply_national_tax = true;
             }
         }
