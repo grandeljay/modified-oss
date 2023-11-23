@@ -47,9 +47,9 @@ class ot_grandeljay_oss extends StdModule
         $this->addConfiguration('SORT_ORDER', MODULE_ORDER_TOTAL_TAX_SORT_ORDER - 2, 6, 1);
     }
 
-    protected function updateSteps()
+    protected function updateSteps(): int
     {
-        if (-1 === version_compare($this->getVersion(), self::VERSION)) {
+        if (version_compare($this->getVersion(), self::VERSION, '<')) {
             $this->setVersion(self::VERSION);
 
             return self::UPDATE_SUCCESS;
