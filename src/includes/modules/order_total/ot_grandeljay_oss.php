@@ -134,14 +134,11 @@ class ot_grandeljay_oss extends StdModule
          */
         unset($_SESSION['country']);
 
-        $order->info['tax']        = 0;
-        $order->info['tax_groups'] = array();
-
         foreach ($order->products as &$product) {
             $tax_class_id    = $product['tax_class_id'];
-            $tax_description = xtc_get_tax_description($tax_class_id, STORE_COUNTRY, STORE_ZONE);
+            $tax_description = xtc_get_tax_description($tax_class_id, $order->delivery['id'], $order->delivery['zone_id']);
             $tax_info        = TAX_NO_TAX . $tax_description;
-            $tax_rate        = xtc_get_tax_rate($tax_class_id, STORE_COUNTRY, STORE_ZONE);
+            $tax_rate        = xtc_get_tax_rate($tax_class_id, $order->delivery['id'], $order->delivery['zone_id']);
             $tax_amount      = $product['price'] * ($tax_rate / 100);
 
             $product['tax']             = $tax_rate;
