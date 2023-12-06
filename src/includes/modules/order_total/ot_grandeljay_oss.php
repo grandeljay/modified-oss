@@ -96,9 +96,9 @@ class ot_grandeljay_oss extends StdModule
         $tax_is_excluded = !$tax_is_included;
         $addTax          = (bool) $_SESSION['customers_status']['customers_status_add_tax_ot'];
 
-        $customer_is_national      = STORE_COUNTRY === $order->delivery['country']['id'];
+        $customer_is_national      = STORE_COUNTRY === $order->delivery['country_id'];
         $customer_is_international = !$customer_is_national;
-        $shipment_is_national      = STORE_COUNTRY === $order->customer['country']['id'];
+        $shipment_is_national      = STORE_COUNTRY === $order->delivery['country_id'];
         $shipment_is_international = !$shipment_is_national;
 
         $apply_national_tax = false;
@@ -136,9 +136,9 @@ class ot_grandeljay_oss extends StdModule
 
         foreach ($order->products as &$product) {
             $tax_class_id    = $product['tax_class_id'];
-            $tax_description = xtc_get_tax_description($tax_class_id, $order->delivery['id'], $order->delivery['zone_id']);
+            $tax_description = xtc_get_tax_description($tax_class_id, $order->delivery['country_id'], $order->delivery['zone_id']);
             $tax_info        = TAX_NO_TAX . $tax_description;
-            $tax_rate        = xtc_get_tax_rate($tax_class_id, $order->delivery['id'], $order->delivery['zone_id']);
+            $tax_rate        = xtc_get_tax_rate($tax_class_id, $order->delivery['country_id'], $order->delivery['zone_id']);
             $tax_amount      = $product['price'] * ($tax_rate / 100);
 
             $product['tax']             = $tax_rate;
