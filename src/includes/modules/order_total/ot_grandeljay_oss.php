@@ -168,11 +168,12 @@ class ot_grandeljay_oss extends StdModule
         $order->info['tax'] = 0;
         unset($order->info['tax_groups']);
 
+        /** Add tax for each product */
         foreach ($order->products as &$product) {
             $tax_class_id    = $product['tax_class_id'];
             $tax_description = xtc_get_tax_description($tax_class_id, $tax_country, $tax_zone);
-            $tax_info        = TAX_NO_TAX . $tax_description;
             $tax_rate        = xtc_get_tax_rate($tax_class_id, $tax_country, $tax_zone);
+            $tax_info        = TAX_NO_TAX . $tax_description;
             $tax_amount      = $product['price'] * ($tax_rate / 100);
 
             $product['tax']             = $tax_rate;
@@ -181,6 +182,21 @@ class ot_grandeljay_oss extends StdModule
 
             $order->info['tax']                  += $tax_amount;
             $order->info['tax_groups'][$tax_info] = $order->info['tax'];
+        }
+
+        /** Add tax for shipping method */
+        $shipping_methods = explode('_', $order->info['shipping_class']);
+        $shipping_class   = $shipping_methods[0] ?? 'Unknown';
+        $shipping_object  = class_exists($shipping_class) ? new $shipping_class() : null;
+
+        if (isset($shipping_object, $shipping_object->tax_class)) {
+            $tax_delivery_rate        = xtc_get_tax_rate($shipping_object->tax_class, $tax_country, $tax_zone);
+            $tax_delivery_description = xtc_get_tax_description($shipping_object->tax_class, $tax_country, $tax_zone);
+            $tax_delivery_info        = TAX_NO_TAX . $tax_delivery_description;
+            $tax_delivery_amount      = $order->info['shipping_cost'] * ($tax_delivery_rate / 100);
+
+            $order->info['tax']                           += $tax_delivery_amount;
+            $order->info['tax_groups'][$tax_delivery_info] = $order->info['tax'];
         }
     }
 }
