@@ -180,8 +180,10 @@ class ot_grandeljay_oss extends StdModule
             $product['tax_info']        = $tax_info;
             $product['tax_description'] = $tax_description;
 
-            $order->info['tax']                  += $tax_amount;
-            $order->info['tax_groups'][$tax_info] = $order->info['tax'];
+            for ($iteration = 1; $iteration <= $product['qty']; $iteration++) {
+                $order->info['tax']                  += $tax_amount;
+                $order->info['tax_groups'][$tax_info] = $order->info['tax'];
+            }
         }
 
         /** Add tax for shipping method */
