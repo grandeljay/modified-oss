@@ -10,7 +10,7 @@
 
 use Grandeljay\Oss\Constants;
 
-$translations = array(
+$translations = [
     /** Module */
     'TITLE'            => 'grandeljay - OSS',
     'LONG_DESCRIPTION' => '',
@@ -18,7 +18,7 @@ $translations = array(
     'STATUS_DESC'      => 'Wählen Sie Ja um das Modul zu aktivieren und Nein um es zu deaktivieren.',
     'SORT_ORDER_TITLE' => 'Sortierreihenfolge',
     'SORT_ORDER_DESC'  => 'Anzeigereihenfolge',
-);
+];
 
 foreach ($translations as $key => $text) {
     $constant = Constants::MODULE_NAME . '_' . $key;
